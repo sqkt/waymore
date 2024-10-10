@@ -782,6 +782,11 @@ def processArchiveUrl(url):
                     userAgent = random.choice(USER_AGENT)
 
                     session = requests.Session()
+                    if args.proxy:
+                        session.proxies = {
+                            'http': args.proxy,
+                            'https': args.proxy
+                        }
                     session.mount('https://', HTTP_ADAPTER)
                     session.mount('http://', HTTP_ADAPTER)
                     resp = session.get(url = archiveUrl, headers={"User-Agent":userAgent}, allow_redirects = True)
@@ -1239,6 +1244,11 @@ def processAlienVaultPage(url):
                 userAgent = random.choice(USER_AGENT)
                 page = url.split('page=')[1]
                 session = requests.Session()
+                if args.proxy:
+                    session.proxies = {
+                        'http': args.proxy,
+                        'https': args.proxy
+                    }
                 session.mount('https://', HTTP_ADAPTER)
                 session.mount('http://', HTTP_ADAPTER)
                 resp = session.get(url, headers={"User-Agent":userAgent})  
@@ -1366,6 +1376,11 @@ def getAlienVaultUrls():
             # Choose a random user agent string to use for any requests
             userAgent = random.choice(USER_AGENT)
             session = requests.Session()
+            if args.proxy:
+                session.proxies = {
+                    'http': args.proxy,
+                    'https': args.proxy
+                }
             session.mount('https://', HTTP_ADAPTER)
             session.mount('http://', HTTP_ADAPTER)
             resp = session.get(url+'&showNumPages=True', headers={"User-Agent":userAgent}) 
@@ -1541,6 +1556,11 @@ def getURLScanUrls():
             # Choose a random user agent string to use for any requests
             userAgent = random.choice(USER_AGENT)
             session = requests.Session()
+            if args.proxy:
+                session.proxies = {
+                    'http': args.proxy,
+                    'https': args.proxy
+                }
             session.mount('https://', HTTP_ADAPTER)
             session.mount('http://', HTTP_ADAPTER)
              # Pass the API-Key header too. This can change the max endpoints per page, depending on URLScan subscription
@@ -1692,6 +1712,11 @@ def getURLScanUrls():
                                 # Choose a random user agent string to use for any requests
                                 userAgent = random.choice(USER_AGENT)
                                 session = requests.Session()
+                                if args.proxy:
+                                    session.proxies = {
+                                        'http': args.proxy,
+                                        'https': args.proxy
+                                    }
                                 session.mount('https://', HTTP_ADAPTER)
                                 session.mount('http://', HTTP_ADAPTER)
                                 # Pass the API-Key header too. This can change the max endpoints per page, depending on URLScan subscription
@@ -1763,6 +1788,11 @@ def processWayBackPage(url):
                 userAgent = random.choice(USER_AGENT)
                 page = url.split('page=')[1]
                 session = requests.Session()
+                if args.proxy:
+                    session.proxies = {
+                        'http': args.proxy,
+                        'https': args.proxy
+                    }
                 session.mount('https://', HTTP_ADAPTER)
                 session.mount('http://', HTTP_ADAPTER)
                 resp = session.get(url, headers={"User-Agent":userAgent})  
@@ -1897,6 +1927,11 @@ def getWaybackUrls():
             # Choose a random user agent string to use for any requests
             userAgent = random.choice(USER_AGENT)
             session = requests.Session()
+            if args.proxy:
+                session.proxies = {
+                    'http': args.proxy,
+                    'https': args.proxy
+                }
             session.mount('https://', HTTP_ADAPTER)
             session.mount('http://', HTTP_ADAPTER)
             resp = session.get(url+'&showNumPages=True', headers={"User-Agent":userAgent}) 
@@ -2023,6 +2058,11 @@ def processCommonCrawlCollection(cdxApiUrl):
                 # Choose a random user agent string to use for any requests
                 userAgent = random.choice(USER_AGENT)
                 session = requests.Session()
+                if args.proxy:
+                    session.proxies = {
+                        'http': args.proxy,
+                        'https': args.proxy
+                    }
                 session.mount('https://', HTTP_ADAPTER_CC)
                 session.mount('http://', HTTP_ADAPTER_CC)
                 resp = session.get(url, stream=True, headers={"User-Agent":userAgent})   
@@ -2118,6 +2158,11 @@ def getCommonCrawlIndexes():
                 # Choose a random user agent string to use for any requests
                 userAgent = random.choice(USER_AGENT)
                 session = requests.Session()
+                if args.proxy:
+                    session.proxies = {
+                        'http': args.proxy,
+                        'https': args.proxy
+                    }
                 session.mount('https://', HTTP_ADAPTER_CC)
                 session.mount('http://', HTTP_ADAPTER_CC)
                 indexes = session.get(CCRAWL_INDEX_URL, headers={"User-Agent":userAgent})
@@ -2328,6 +2373,11 @@ def getVirusTotalUrls():
             # Choose a random user agent string to use for any requests
             userAgent = random.choice(USER_AGENT)
             session = requests.Session()
+            if args.proxy:
+                session.proxies = {
+                    'http': args.proxy,
+                    'https': args.proxy
+                }
             session.mount('https://', HTTP_ADAPTER)
             session.mount('http://', HTTP_ADAPTER)
             # Pass the API-Key header too. This can change the max endpoints per page, depending on URLScan subscription
@@ -2518,6 +2568,11 @@ def processResponses():
                 success = True
                 userAgent = random.choice(USER_AGENT)
                 session = requests.Session()
+                if args.proxy:
+                    session.proxies = {
+                        'http': args.proxy,
+                        'https': args.proxy
+                    }
                 session.mount('https://', HTTP_ADAPTER)
                 session.mount('http://', HTTP_ADAPTER)
                 resp = session.get(url, stream=True, headers={"User-Agent":userAgent}, timeout=args.timeout)  
@@ -3146,6 +3201,13 @@ def main():
     )
     parser.add_argument('-v', '--verbose', action='store_true', help="Verbose output")
     parser.add_argument('--version', action='store_true', help="Show version number")
+    parser.add_argument(
+        '-proxy',
+        '--proxy',
+        action='store',
+        help='The proxy server to use for requests, e.g., http://127.0.0.1:8080',
+        default=None
+    )
     args = parser.parse_args()
 
     # If --version was passed, display version and exit
